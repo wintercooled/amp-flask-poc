@@ -1,0 +1,43 @@
+@import url('https://use.typekit.net/chx2fbn.css');
+
+html {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #12171e;
+    color: #fff;
+    font-family: din-2014, Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: din-2014;
+}
+
+a {
+    color: #1CADB2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #1CADB2;
+}
+
+th {
+    padding: 10px;
+    border-bottom: 1pt solid white;
+}
+
+td {
+    padding: 5px;
+}

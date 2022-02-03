@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}User: {{ investor.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <a href="{{ url_for('registered_users') }}">
+            Registered Users
+        </a>
+        <span>:</span>
+        <span>
+            {{ investor.name }}
+        </span>
+    </div>
+
+    <div>
+        <h2>{{  investor.name  }}</h2>
+    </div>
+
+    <table>
+        <tr>
+            <td>
+                AMP ID:
+            </td>
+            <td>
+                {{ investor.GAID }}
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <h3>
+            Asset Balances:
+        </h3>
+    </div>
+
+    {% if balances %}
+    <table>
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for balance in balances %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('asset_summary', asset_uuid=[balance.asset_uuid], gaid=[investor.GAID]) }}">
+                        {{ balance.asset_id }}
+                    </a>
+                </td>
+                <td>
+                    {{ balance.balance }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div>The user has no assets yet.</div>
+    {% endif %}
+</div>
+{% endblock content %}

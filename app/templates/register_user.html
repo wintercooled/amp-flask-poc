@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Register New Blockstream AMP User{% endblock %}
+
+{% block content %}
+<div class="container investor-list">
+    <div class="header d-flex align-items-center mb-4">
+        Register New Blockstream AMP User
+    </div>
+    <br />
+    {% if not name %}
+    <div>
+        The user name/reference can be any identifier that ties the record
+        to a known entity. AMP itself shouldn't be used to hold any KYC/AML
+        data.
+    </div><br />
+    <div>
+        The Green Wallet AMP Account ID can be found in the user's Blockstream
+        Green Wallet by clicking the 'GET ID' button once signed into the
+        AMP wallet.
+    </div><br />
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            <br />
+            {{ form.gaid.label }}<br>
+            {{ form.gaid(size=32) }}<br>
+            {% for error in form.gaid.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(class_="btn-submit ml-auto") }}</p>
+    </form>
+    {% else %}
+        {% if already_registered %}
+            <h3>The AMP ID you provided has already been registered against another user.</h3>
+            <br/>
+        {% else %}
+            <h3>The new user has been added.</h3>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock content %}

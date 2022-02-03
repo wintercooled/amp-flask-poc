@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Registered Users{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <a href="{{ url_for('registered_users') }}">
+            Registered Users
+        </a>
+        <span></span>
+    </div>
+    <br />
+
+    {% if investors %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>AMP Account ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for investor in investors %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('registered_user', registered_user_id=[investor.id]) }}">
+                        {{ investor.name }}
+                    </a>
+                </td>
+                {% if investor.GAID %}
+                <td>
+                    {{ investor.GAID }}
+                </td>
+                {% else %}
+                <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock content %}

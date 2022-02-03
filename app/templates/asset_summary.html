@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Asset: {{ asset.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <a href="{{ url_for('assets') }}">Assets</a>
+        <span>:</span>
+        <span>
+            {{ asset.name }}
+        </span>
+        <br /><br />
+    </div>
+
+    <table>
+        <tr>
+            <td>
+                Amount In Circulation:
+            </td>
+            <td>
+                {{ circulating_amount }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Ticker:
+            </td>
+            <td>
+                {{ asset.ticker }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Type:
+            </td>
+            {% if asset.transfer_restricted %}
+                <td>
+                    Transfer Restricted
+                </td>
+            {% else %}
+                <td>
+                    Tracked
+                </td>
+            {% endif %}
+        </tr>
+    </table>
+
+    <br />
+
+    <button onclick="showHideBalances()">Balances</button>
+    <button onclick="showHideActivities()">Activities</button>
+    <button onclick="showHideUTXOs()">UTXOs</button>
+
+    <div id="balances" style="display:block;">
+        <h3>
+            Balances
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Owner (User ID)</th>
+                    <th>Amount</th>
+                    <th>AMP Account ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for confirmed in balance.confirmed_balance %}
+                <tr>
+                    <td>
+                        {{ confirmed.owner }}
+                    </td>
+                    <td>
+                        {{ confirmed.amount }}
+                    </td>
+                    <td>
+                        {{ confirmed.GAID }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="activities" style="display:none;">
+        <h3>
+            Activities
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in activities %}
+                <tr>
+                    <td>
+                        {{ activity.description }}
+                    </td>
+                    <td>
+                        {{ activity.amount }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="utxos" style="display:none;">
+        <h3>
+            UTXOs
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction</th>
+                    <th>VOut</th>
+                    <th>Amount</th>
+                    <th>Owner/User ID</th>
+                    <th>AMP Account ID</th>
+                    <th>Locked?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for utxo in utxos %}
+                <tr>
+                    <td>
+                        {{ utxo.txid[0:8] }}...
+                    </td>
+                    <td>
+                        {{ utxo.vout }}
+                    </td>
+                    <td>
+                        {{ utxo.amount }}
+                    </td>
+                    <td>
+                        {{ utxo.investor }}
+                    </td>
+                    <td>
+                        {{ utxo.gaid }}
+                    </td>
+                    {% if utxo.blacklisted %}
+                    <td>Yes</td>
+                    {% else %}
+                    <td>No</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function showHideBalances() {
+        var b = document.getElementById("balances");
+        var a = document.getElementById("activities");
+        var u = document.getElementById("utxos");
+        if (b.style.display === "none") {
+            b.style.display = "block";
+            a.style.display = "none";
+            u.style.display = "none";
+        } else {
+            b.style.display = "none";
+        }
+    }
+
+    function showHideActivities() {
+        var b = document.getElementById("balances");
+        var a = document.getElementById("activities");
+        var u = document.getElementById("utxos");
+        if (a.style.display === "none") {
+            a.style.display = "block";
+            b.style.display = "none";
+            u.style.display = "none";
+        } else {
+            a.style.display = "none";
+        }
+    }
+
+    function showHideUTXOs() {
+        var b = document.getElementById("balances");
+        var a = document.getElementById("activities");
+        var u = document.getElementById("utxos");
+        if (u.style.display === "none") {
+            u.style.display = "block";
+            a.style.display = "none";
+            b.style.display = "none";
+        } else {
+            u.style.display = "none";
+        }
+    }
+</script>
+{% endblock content %}

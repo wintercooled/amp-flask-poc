@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}An error occured: {{ error }}{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <h2>{{  error  }}</h2>
+    </div>
+
+    <div>
+        <a href="{{ url_for('assets') }}">Back to the assets list.</a>
+    </div>
+</div>
+{% endblock content %}
